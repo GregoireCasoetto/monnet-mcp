@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.log
+
+# DNS auth key (mcp-publisher) — never commit
+key.pem
+*.pem
+
+# env & build artifacts
+.env
+.env.*
+tsconfig.tsbuildinfo
