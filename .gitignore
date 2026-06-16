@@ -10,3 +10,6 @@ key.pem
 .env
 .env.*
 tsconfig.tsbuildinfo
+
+# mcp-publisher CLI binary (downloaded locally)
+mcp-publisher

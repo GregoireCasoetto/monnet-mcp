@@ -11,7 +11,7 @@ const MONNET_API_KEY = process.env.MONNET_API_KEY;
 if (!MONNET_API_KEY) {
   process.stderr.write(
     "Error: MONNET_API_KEY environment variable is not set.\n" +
-    "Generate one at https://app.monnet.ai/settings and add it to your MCP client config.\n"
+    "Generate one at https://app.monnet.ai/settings (API Keys tab) and add it to your MCP client config.\n"
   );
   process.exit(1);
 }

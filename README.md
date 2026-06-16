@@ -22,7 +22,7 @@ Add this to your MCP client config (e.g. `~/Library/Application Support/Claude/c
 }
 ```
 
-Generate an API key from the Monnet web app: **Settings → API Keys → Generate new key**.
+Generate an API key at **https://app.monnet.ai/settings** (API Keys tab).
 
 ## Environment variables
 

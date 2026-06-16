@@ -2,23 +2,24 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "ai.monnet/mcp",
   "description": "Model Context Protocol server for Monnet — motions, plans, and approvals for MCP-compatible clients.",
+  "websiteUrl": "https://www.monnet.ai",
   "repository": {
     "url": "https://github.com/GregoireCasoetto/monnet-mcp",
     "source": "github"
   },
-  "version": "0.2.1",
+  "version": "0.2.2",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@monnet/mcp",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "transport": {
         "type": "stdio"
       },
       "environmentVariables": [
         {
           "name": "MONNET_API_KEY",
-          "description": "Your Monnet API key (mnk_...). Generate one in the Monnet web app under Settings → API Keys.",
+          "description": "Your Monnet API key (mnk_...). Generate one at https://app.monnet.ai/settings (API Keys tab).",
           "isRequired": true,
           "isSecret": true,
           "format": "string"
