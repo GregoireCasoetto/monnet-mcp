@@ -10,12 +10,28 @@ const PRIORITY_DOTS: Record<string, string> = {
   low: "○",
 };
 
+// V2 plan tree (see backend domain/entities/plan.py). The API always returns
+// the normalized V2 shape — every item is discriminated on `kind`.
 interface PlanStep {
+  kind?: "step";
   content: string;
   status: string;
-  assignees?: string[];
-  approval?: boolean;
-  approved_by?: string[];
+  assignee?: string | null;
+  step_type?: "task" | "approval" | "decision" | "interview";
+  approved_by?: string | null;
+}
+
+interface PlanGroup {
+  kind: "group";
+  title: string;
+  execution?: "parallel" | "sequential";
+  children: PlanItem[];
+}
+
+type PlanItem = PlanStep | PlanGroup;
+
+function isGroup(item: PlanItem): item is PlanGroup {
+  return (item as PlanGroup).kind === "group";
 }
 
 interface MotionDetail {
@@ -24,7 +40,7 @@ interface MotionDetail {
   status: string;
   priority: string | null;
   body: string | null;
-  plan: PlanStep[] | null;
+  plan: PlanItem[] | null;
   author: string;
   created_at: string;
   updated_at: string;
@@ -46,6 +62,34 @@ const DIVIDER = "━━━━━━━━━━━━━━━━━━━━━
 
 function padRight(str: string, len: number): string {
   return str.length >= len ? str : str + " ".repeat(len - str.length);
+}
+
+// Render the plan tree recursively. Groups print their title + execution mode
+// and recurse into their children; steps print status icon, content, assignee
+// and an approval lock. Numbering is hierarchical (1, 2, 2.1, 2.2, …).
+function renderPlanItems(
+  items: PlanItem[],
+  nameMap: Map<string, string>,
+  lines: string[],
+  depth: number,
+  prefix: string,
+): void {
+  const indent = "  ".repeat(depth + 1);
+  items.forEach((item, i) => {
+    const number = `${prefix}${i + 1}`;
+    if (isGroup(item)) {
+      const exec = item.execution ? `  (${item.execution})` : "";
+      lines.push(`${indent}${number}. 📂  ${item.title}${exec}`);
+      renderPlanItems(item.children || [], nameMap, lines, depth + 1, `${number}.`);
+    } else {
+      const icon = STATUS_ICONS[item.status] || "⏳";
+      const assigneeStr = item.assignee
+        ? `  → ${nameMap.get(item.assignee) || item.assignee}`
+        : "";
+      const lock = item.step_type === "approval" ? " 🔒" : "";
+      lines.push(`${indent}${number}. ${icon}  ${item.content}${assigneeStr}${lock}`);
+    }
+  });
 }
 
 export function renderMotionDetail(data: MotionDetail): string {
@@ -88,16 +132,7 @@ export function renderMotionDetail(data: MotionDetail): string {
   if (data.plan && data.plan.length > 0) {
     lines.push("");
     lines.push("PLAN");
-    data.plan.forEach((step, i) => {
-      const icon = STATUS_ICONS[step.status] || "⏳";
-      let assigneeStr = "";
-      if (step.assignees && step.assignees.length > 0) {
-        const names = step.assignees.map((uid) => nameMap.get(uid) || uid);
-        assigneeStr = `  → ${names.join(", ")}`;
-      }
-      const lock = step.approval ? " 🔒" : "";
-      lines.push(`  ${i + 1}. ${icon}  ${step.content}${assigneeStr}${lock}`);
-    });
+    renderPlanItems(data.plan, nameMap, lines, 0, "");
   }
 
   // Members — show motion-level roles (editor/commenter) when available,
