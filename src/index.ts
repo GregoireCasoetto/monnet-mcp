@@ -25,11 +25,13 @@ import { handleApprove, APPROVE_TOOL_DEFINITION } from "./tools/approve.js";
 import { handleReject, REJECT_TOOL_DEFINITION } from "./tools/reject.js";
 import { handleAskMonnet, ASK_MONNET_TOOL_DEFINITION } from "./tools/ask-monnet.js";
 import { handleListWorkspaces, LIST_WORKSPACES_TOOL_DEFINITION } from "./tools/list-workspaces.js";
+import { handleGetWorkspaceMemory, GET_WORKSPACE_MEMORY_TOOL_DEFINITION } from "./tools/get-workspace-memory.js";
 import { requiresSendApproval, requestSendApproval } from "./approval.js";
 
 const TOOLS = [
   WHOAMI_TOOL_DEFINITION,
   LIST_WORKSPACES_TOOL_DEFINITION,
+  GET_WORKSPACE_MEMORY_TOOL_DEFINITION,
   GET_MOTION_TOOL_DEFINITION,
   LIST_MOTIONS_TOOL_DEFINITION,
   GET_INBOX_TOOL_DEFINITION,
@@ -44,6 +46,7 @@ const TOOLS = [
 const HANDLERS: Record<string, (args: unknown) => Promise<string>> = {
   monnet_whoami: handleWhoami,
   list_workspaces: handleListWorkspaces,
+  get_workspace_memory: handleGetWorkspaceMemory,
   get_motion: handleGetMotion,
   list_motions: handleListMotions,
   get_inbox: handleGetInbox,

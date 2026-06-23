@@ -1,6 +1,6 @@
 {
   "name": "@monnet/mcp",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "mcpName": "ai.monnet/mcp",
   "description": "Model Context Protocol server for Monnet — exposes motions, plans, and approvals to MCP-compatible clients like Claude Desktop and Cursor.",
   "license": "MIT",
