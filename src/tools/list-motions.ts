@@ -35,7 +35,7 @@ export async function handleListMotions(args: unknown): Promise<string> {
   const wsId = await resolveWorkspaceId(parsed.workspace_slug);
 
   const params = new URLSearchParams({
-    status,
+    motion_status: status,
     page: String(page),
     limit: String(limit),
   });
@@ -47,6 +47,7 @@ export async function handleListMotions(args: unknown): Promise<string> {
     workspace_slug: parsed.workspace_slug,
     status,
     page,
+    limit,
     total: data.total,
     motions: data.motions.map((m) => ({
       short_id: m.id.slice(0, 8),
