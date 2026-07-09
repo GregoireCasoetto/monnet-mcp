@@ -203,6 +203,7 @@ interface MotionListData {
   workspace_slug: string;
   status: string;
   page: number;
+  limit: number;
   total: number;
   motions: MotionListItem[];
 }
@@ -223,9 +224,9 @@ export function renderMotionList(data: MotionListData): string {
     lines.push(`- \`${m.short_id}\` ${dot} **${m.summary}** — ${m.author}`);
   }
 
-  if (data.total > data.motions.length) {
+  if (data.total > data.limit) {
     lines.push("");
-    lines.push(`_Page ${data.page} of ${Math.ceil(data.total / data.motions.length)}. Pass \`page\` to see more._`);
+    lines.push(`_Page ${data.page} of ${Math.ceil(data.total / data.limit)}. Pass \`page\` to see more._`);
   }
 
   return lines.join("\n");
