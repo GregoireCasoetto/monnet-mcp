@@ -1,18 +1,18 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "ai.monnet/mcp",
-  "description": "Model Context Protocol server for Monnet — motions, plans, and approvals for MCP-compatible clients.",
+  "description": "MCP server for Monnet — motions, plans, files, approvals, and the team's company brain.",
   "websiteUrl": "https://www.monnet.ai",
   "repository": {
     "url": "https://github.com/GregoireCasoetto/monnet-mcp",
     "source": "github"
   },
-  "version": "0.2.5",
+  "version": "0.8.4",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@monnet/mcp",
-      "version": "0.2.5",
+      "version": "0.8.4",
       "transport": {
         "type": "stdio"
       },

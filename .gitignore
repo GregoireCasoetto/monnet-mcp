@@ -13,3 +13,4 @@ tsconfig.tsbuildinfo
 
 # mcp-publisher CLI binary (downloaded locally)
 mcp-publisher
+registry-login.sh
